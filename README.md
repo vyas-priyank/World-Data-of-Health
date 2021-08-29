@@ -101,7 +101,7 @@ limit 1
 ```
 ![image](https://user-images.githubusercontent.com/89662666/131260766-7b800499-d6c6-4cef-86a7-3612a7fe8a4d.png)
 
-# Literacy Rate in Countries where incidence of HIV among youth is greater the world Avg
+# Literacy Rate in Countries where incidence of HIV among youth is greater the world Avg in a a particular year
 ```sql
 
 with Incidence_of_HIV as (
