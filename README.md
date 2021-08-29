@@ -1,9 +1,8 @@
 # World-Data-of-Health
 Exploring world Health Data
 
-# World Health_Nutrition Dataset
 
-# Average Birth Rate in Various Countries arranged in descending with maximum and minimum birth rate recorded
+# Average Birth Rate in Various Countries arranged in descending. 
 ```sql
 
 SELECT 
@@ -101,6 +100,40 @@ limit 1
 
 ```
 ![image](https://user-images.githubusercontent.com/89662666/131260766-7b800499-d6c6-4cef-86a7-3612a7fe8a4d.png)
+
+# Literacy Rate in Countries where incidence of HIV among youth is greater the world Avg
+```sql
+
+with Incidence_of_HIV as (
+SELECT
+avg(value) as Incidence_of_HIV,
+FROM
+`bigquery-public-data.world_bank_health_population.health_nutrition_population`
+where indicator_name = 'Incidence of HIV, all (per 1,000 uninfected population)'
+and year = 2017
+),
+--select 
+
+list_of_countries as 
+(select 
+distinct (country_name),value 
+FROM
+  `bigquery-public-data.world_bank_health_population.health_nutrition_population`
+join Incidence_of_HIV a
+on 1 = 1 
+where indicator_name = 'Incidence of HIV, all (per 1,000 uninfected population)'
+and year = 2017
+and value > a.Incidence_of_HIV)
+
+select loc.country_name, world.value as Literacy_Rate
+FROM list_of_countries loc 
+join `bigquery-public-data.world_bank_health_population.health_nutrition_population` world
+on world.country_name = loc.country_name 
+where indicator_name = 'Literacy rate, adult total (% of people ages 15 and above)'
+and year = 2017
+order by Literacy_Rate desc
+```
+![image](https://user-images.githubusercontent.com/89662666/131262971-523d66e6-8aa7-4a82-be7b-8965ece1e375.png)
 
 
 
